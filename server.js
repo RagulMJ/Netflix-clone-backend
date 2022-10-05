@@ -1,20 +1,23 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const userRoutes = require('./routes/Userrouter')
+const userRoutes = require('./routes/Userrouter');
 
-const app = express()
+const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb://localhost:27017/netflix",{
-    useNewUrlParser:true,
-    useUnifiedTopology:true,
-}).then(() => {
-    console.log("DB Connected");
-})
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('connected to db');
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
 
-app.use('/api/user',userRoutes)
+app.use('/api/user', userRoutes);
 
-app.listen(5000,console.log("server started 5000"))
+app.listen(5000, console.log('server started 5000'));
