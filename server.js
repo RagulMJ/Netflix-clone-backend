@@ -18,6 +18,9 @@ mongoose
     console.log(err.message);
   });
 
+app.get('/', (req, res) => {
+  res.send('web server running');
+});
 app.use('/api/user', userRoutes);
 
 app.listen(5000, console.log('server started 5000'));
